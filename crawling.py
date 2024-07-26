@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
+from tqdm import tqdm
 
 def crawling(soup):
 
@@ -30,16 +31,27 @@ def crawling(soup):
 
 if __name__ == "__main__":
 
-    df = pd.DataFrame() #데이터프레임 생성
+    page = 1
+    df = pd.DataFrame()
+    while tqdm(1):
+        try:
+            url = f"https://www.hollys.co.kr/store/korea/korStore2.do?pageNo={page}"
+            response = requests.get(url)
+            html = response.text
+            soup = BeautifulSoup(html,'html.parser')
+            new_df = crawling(soup)
+            page += 1
+            print(page)
+        except Exception as e:
+            print(e)
+            break
+        else:
+            df = pd.concat([df, new_df])
+    df.reset_index(inplace=True)
+    path=""
+    df.to_csv("data/hollys.csv")
 
-    url = "https://www.hollys.co.kr/store/korea/korStore2.do"
-    response = requests.get(url)
-    html = response.text
-    soup = BeautifulSoup(html,'html.parser')
-    #print(response.text)
-    #print(soup)
-
-    print(crawling(soup))
+    #df = crawling(soup)
 
     # tds = trs[1].find_all('td')
     # td = tds[0]
