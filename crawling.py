@@ -31,6 +31,14 @@ def crawling(soup):
 
 if __name__ == "__main__":
 
+    url = f"https://www.hollys.co.kr/store/korea/korStore2.do?pageNo=1"
+    response = requests.get(url)
+    html = response.text
+    soup = BeautifulSoup(html, 'html.parser')
+    tr = soup.select("#contents > div.content > fieldset > fieldset > div.tableType01 > table > tbody > tr:nth-child(1) > td.noline.center_t")
+    print(tr)
+    exit()
+
     page = 1
     df = pd.DataFrame()
     while tqdm(1):
