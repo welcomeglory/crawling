@@ -46,7 +46,7 @@ def chrome_driver() :
    chrome_options.add_argument('--mute-audio')
    #    Tor 프록시 설정 (ip 우회)
    # chrome_options.add_argument('--proxy-server=%s' % PROXY)
-   # chrome_options.add_argument("--headless=new")
+   chrome_options.add_argument("--headless=new") # bask단으로 돌림
 
    # 브라우저 열기
    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
